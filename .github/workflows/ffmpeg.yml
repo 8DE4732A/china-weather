@@ -15,17 +15,13 @@ jobs:
           python-version: 3.9
       - run: rm -rf weather-ffmpeg/
       - run: mkdir weather-ffmpeg
+      - run: mkdir public
       - run: python ln.py
       - uses: FedericoCarboni/setup-ffmpeg@v1
         id: setup-ffmpeg
-      - run: ffmpeg -f image2 -i weather-ffmpeg/%06d.jpg -vcodec libx264 -r 10 weather.mp4
-      - name: Commit
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "action: `date`"
-          git push
-      - uses: ad-m/github-push-action@master
+      - run: ffmpeg -f image2 -i weather-ffmpeg/%06d.jpg -vcodec libx264 -r 10 ./public/weather.mp4
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
