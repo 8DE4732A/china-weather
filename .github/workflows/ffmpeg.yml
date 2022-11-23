@@ -2,7 +2,7 @@ name: ffmpeg
 
 on:
   schedule:
-    - cron: "* * */1 * *"
+    - cron: "0 0 * * *"
 
 
 jobs:
@@ -14,6 +14,7 @@ jobs:
         with:
           python-version: 3.9
       - run: rm -rf weather-ffmpeg/
+      - run: rm -rf weather.mp4
       - run: mkdir weather-ffmpeg
       - run: mkdir public
       - run: python ln.py
@@ -24,4 +25,3 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
