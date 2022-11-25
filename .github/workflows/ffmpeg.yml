@@ -23,6 +23,7 @@ jobs:
       - run: ffmpeg -f image2 -i weather-ffmpeg/%06d.jpg -vcodec libx264 -r 10 ./public/weather.mp4
       - run: cp index.html ./public
       - run: cp CNAME ./public
+      - run: rm -rf weather-ffmpeg/
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
